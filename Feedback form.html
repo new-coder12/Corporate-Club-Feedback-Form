@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel ="icon" type="image/png" href="logo.png.png">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            color: #333;
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            width: 100%;
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+        }
+        
+        header {
+            background: linear-gradient(to right, #4a6fc7, #6a11cb);
+            color: white;
+            text-align: center;
+            padding: 35px 20px;
+        }
+        
+        header h1 {
+            margin-bottom: 15px;
+            font-size: 2.5rem;
+            font-weight: 700;
+        }
+        
+        header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .feedback-form {
+            padding: 35px;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: #2c3e50;
+            font-size: 1.1rem;
+        }
+        
+        input, select, textarea {
+            width: 100%;
+            padding: 16px;
+            border: 2px solid #e1e8ed;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+        
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #4a6fc7;
+            box-shadow: 0 0 0 4px rgba(74, 111, 199, 0.2);
+        }
+        
+        textarea {
+            min-height: 180px;
+            resize: vertical;
+        }
+        
+        button {
+            background: linear-gradient(to right, #4a6fc7, #6a11cb);
+            color: white;
+            border: none;
+            padding: 18px 25px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: 600;
+            width: 100%;
+            transition: all 0.3s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            box-shadow: 0 5px 15px rgba(106, 17, 203, 0.4);
+        }
+        
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(106, 17, 203, 0.5);
+        }
+        
+        button:active {
+            transform: translateY(0);
+        }
+        
+        .success-message {
+            display: none;
+            background-color: #d4edda;
+            color: #155724;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 25px;
+            text-align: center;
+            font-weight: 500;
+            animation: fadeIn 0.5s ease;
+            border-left: 5px solid #28a745;
+        }
+        
+        .error {
+            color: #e74c3c;
+            font-size: 14px;
+            margin-top: 8px;
+            display: none;
+            font-weight: 500;
+        }
+        
+        .required {
+            color: #e74c3c;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .form-footer {
+            text-align: center;
+            margin-top: 25px;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 600px) {
+            .feedback-form {
+                padding: 25px;
+            }
+            
+            header {
+                padding: 25px 15px;
+            }
+            
+            header h1 {
+                font-size: 2rem;
+            }
+            
+            header p {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Share Your Feedback</h1>
+            <p>We're always looking for ways to improve. Please let us know your thoughts, suggestions, or concerns.</p>
+        </header>
+        
+        <div class="feedback-form">
+            <form id="feedbackForm">
+                <div class="form-group">
+                    <label for="name">Your Name <span class="required">*</span></label>
+                    <input type="text" id="name" name="name" required placeholder="Enter your full name">
+                    <div class="error" id="nameError">Please enter your name</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email Address <span class="required">*</span></label>
+                    <input type="email" id="email" name="email" required placeholder="Enter your email address">
+                    <div class="error" id="emailError">Please enter a valid email address</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="category">Feedback Category <span class="required">*</span></label>
+                    <select id="category" name="category" required>
+                        <option value="">Select a category</option>
+                        <option value="suggestion">Suggestion</option>
+                        <option value="complaint">Complaint</option>
+                        <option value="bug">Bug Report</option>
+                        <option value="praise">Praise</option>
+                        <option value="question">Question</option>
+                        <option value="other">Other</option>
+                    </select>
+                    <div class="error" id="categoryError">Please select a category</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="message">Your Feedback <span class="required">*</span></label>
+                    <textarea id="message" name="message" placeholder="Please provide detailed feedback..." required></textarea>
+                    <div class="error" id="messageError">Please enter your feedback</div>
+                </div>
+                
+                <button type="submit">
+                    <i class="fas fa-paper-plane"></i> Submit Feedback
+                </button>
+            </form>
+            
+            <div class="success-message" id="successMessage">
+                <i class="fas fa-check-circle"></i> Thank you for your feedback! We appreciate you taking the time to share your experience with us.
+            </div>
+            
+            <div class="form-footer">
+                <p>Your feedback helps us improve our services</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('feedbackForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Reset errors
+            const errorElements = document.querySelectorAll('.error');
+            errorElements.forEach(el => el.style.display = 'none');
+            
+            let isValid = true;
+            
+            // Validate name
+            const nameInput = document.getElementById('name');
+            if (!nameInput.value.trim()) {
+                document.getElementById('nameError').style.display = 'block';
+                isValid = false;
+            }
+            
+            // Validate email
+            const emailInput = document.getElementById('email');
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(emailInput.value)) {
+                document.getElementById('emailError').style.display = 'block';
+                isValid = false;
+            }
+            
+            // Validate category
+            const categoryInput = document.getElementById('category');
+            if (!categoryInput.value) {
+                document.getElementById('categoryError').style.display = 'block';
+                isValid = false;
+            }
+            
+            // Validate message
+            const messageInput = document.getElementById('message');
+            if (!messageInput.value.trim()) {
+                document.getElementById('messageError').style.display = 'block';
+                isValid = false;
+            }
+            
+            if (isValid) {
+                // Get form data
+                const formData = {
+                    name: nameInput.value,
+                    email: emailInput.value,
+                    category: categoryInput.value,
+                    message: messageInput.value,
+                    date: new Date().toISOString()
+                };
+                
+                // Save to localStorage
+                saveFeedback(formData);
+                
+                // Show success message
+                document.getElementById('successMessage').style.display = 'block';
+                
+                // Reset form
+                document.getElementById('feedbackForm').reset();
+                
+                // Hide success message after 5 seconds
+                setTimeout(() => {
+                    document.getElementById('successMessage').style.display = 'none';
+                }, 5000);
+            }
+        });
+        
+        function saveFeedback(feedback) {
+            // Get existing feedback from localStorage or initialize empty array
+            let existingFeedback = JSON.parse(localStorage.getItem('feedbackData')) || [];
+            
+            // Add new feedback
+            existingFeedback.push(feedback);
+            
+            // Save back to localStorage
+            localStorage.setItem('feedbackData', JSON.stringify(existingFeedback));
+            
+            console.log('Feedback saved:', feedback);
+        }
+    </script>
+</body>
+</html>
